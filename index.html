@@ -1,0 +1,1127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="ENCORE">
+<title>ENCORE Wellness Plan</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --emerald:#059669;--emerald-light:#d1fae5;--emerald-dark:#047857;
+  --orange:#ea580c;--orange-light:#fff7ed;
+  --indigo:#4f46e5;--indigo-light:#e0e7ff;
+  --cyan:#0891b2;--cyan-light:#cffafe;
+  --rose:#e11d48;--rose-light:#fff1f2;
+  --gray-50:#f9fafb;--gray-100:#f3f4f6;--gray-200:#e5e7eb;--gray-300:#d1d5db;
+  --gray-400:#9ca3af;--gray-500:#6b7280;--gray-600:#4b5563;--gray-700:#374151;--gray-800:#1f2937;
+  --shadow:0 1px 3px rgba(0,0,0,.1);--shadow-md:0 4px 6px rgba(0,0,0,.07);
+  --radius:12px;--radius-lg:16px;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--gray-50);color:var(--gray-800);overscroll-behavior:none;line-height:1.5}
+#app{max-width:500px;margin:0 auto;padding:0 16px 88px;min-height:100vh;min-height:100dvh}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
+
+/* Typography */
+h1{font-size:22px;font-weight:800;line-height:1.2}
+h2{font-size:18px;font-weight:700;line-height:1.3}
+h3{font-size:15px;font-weight:700}
+h4{font-size:14px;font-weight:600}
+.text-xs{font-size:11px}.text-sm{font-size:13px}.text-lg{font-size:17px}.text-xl{font-size:20px}.text-2xl{font-size:24px}.text-3xl{font-size:30px}
+.fw-500{font-weight:500}.fw-600{font-weight:600}.fw-700{font-weight:700}.fw-800{font-weight:800}
+.text-gray{color:var(--gray-500)}.text-gray-dark{color:var(--gray-600)}.text-white{color:#fff}
+
+/* Layout */
+.flex{display:flex}.flex-col{flex-direction:column}.items-center{align-items:center}.items-start{align-items:start}
+.justify-between{justify-content:space-between}.justify-center{justify-content:center}
+.gap-1{gap:4px}.gap-2{gap:8px}.gap-3{gap:12px}.gap-4{gap:16px}
+.flex-1{flex:1}.flex-wrap{flex-wrap:wrap}.shrink-0{flex-shrink:0}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.w-full{width:100%}.text-center{text-center}.text-right{text-align:right}
+.mt-1{margin-top:4px}.mt-2{margin-top:8px}.mt-3{margin-top:12px}.mt-4{margin-top:16px}
+.mb-1{margin-bottom:4px}.mb-2{margin-bottom:8px}.mb-3{margin-bottom:12px}.mb-4{margin-bottom:16px}
+.ml-auto{margin-left:auto}
+.space-y > *+*{margin-top:12px}
+.space-y-sm > *+*{margin-top:8px}
+
+/* Cards & Components */
+.card{background:#fff;border:1px solid var(--gray-200);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow)}
+.card-lg{border-radius:var(--radius-lg);padding:20px}
+.hero{border-radius:var(--radius-lg);padding:20px;color:#fff;position:relative;overflow:hidden}
+.hero-emerald{background:linear-gradient(135deg,#059669,#0d9488)}
+.hero-orange{background:linear-gradient(135deg,#ea580c,#e11d48)}
+.hero-indigo{background:linear-gradient(135deg,#4f46e5,#7c3aed)}
+.hero-cyan{background:linear-gradient(135deg,#0891b2,#06b6d4)}
+.hero-rose{background:linear-gradient(135deg,#e11d48,#ec4899)}
+
+.badge{display:inline-flex;align-items:center;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:600}
+.badge-emerald{background:var(--emerald-light);color:var(--emerald-dark)}
+.badge-orange{background:#fff7ed;color:#c2410c}
+.badge-indigo{background:#e0e7ff;color:#4338ca}
+.badge-blue{background:#dbeafe;color:#1d4ed8}
+.badge-green{background:#dcfce7;color:#15803d}
+.badge-yellow{background:#fef9c3;color:#a16207}
+.badge-red{background:#fee2e2;color:#b91c1c}
+.badge-purple{background:#f3e8ff;color:#7e22ce}
+.badge-gray{background:var(--gray-100);color:var(--gray-500)}
+.badge-rose{background:#ffe4e6;color:#be123c}
+.badge-sky{background:#e0f2fe;color:#0369a1}
+.badge-amber{background:#fef3c7;color:#b45309}
+.badge-teal{background:#ccfbf1;color:#0f766e}
+
+.alert{border-radius:var(--radius);padding:14px;display:flex;gap:10px;align-items:flex-start}
+.alert-amber{background:#fffbeb;border:1px solid #fde68a}
+.alert-red{background:#fef2f2;border:1px solid #fecaca}
+.alert-blue{background:#eff6ff;border:1px solid #bfdbfe}
+.alert-indigo{background:#eef2ff;border:1px solid #c7d2fe}
+
+/* Buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;padding:12px 20px;border-radius:var(--radius);font-weight:600;font-size:14px;border:none;cursor:pointer;transition:.15s;font-family:inherit;touch-action:manipulation}
+.btn-emerald{background:var(--emerald);color:#fff}.btn-emerald:active{background:var(--emerald-dark)}
+.btn-outline{background:transparent;border:1.5px solid var(--gray-200);color:var(--gray-700)}.btn-outline:active{background:var(--gray-100)}
+.btn-sm{padding:8px 14px;font-size:12px;border-radius:8px}
+.btn-icon{width:40px;height:40px;padding:0;border-radius:50%;background:var(--gray-100);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:18px;transition:.15s}
+.btn-icon:active{background:var(--gray-200)}
+
+/* Day pills */
+.day-pills{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.day-pills::-webkit-scrollbar{display:none}
+.pill{padding:8px 14px;border-radius:8px;font-size:12px;font-weight:600;border:none;cursor:pointer;white-space:nowrap;background:var(--gray-100);color:var(--gray-600);transition:.15s;touch-action:manipulation}
+.pill.active{color:#fff;box-shadow:var(--shadow-md)}
+.pill.active-orange{background:var(--orange)}
+.pill.active-indigo{background:var(--indigo)}
+
+/* Week nav */
+.week-nav{display:flex;align-items:center;justify-content:space-between;background:#fff;border:1px solid var(--gray-200);border-radius:var(--radius);padding:10px 8px}
+.week-btn{width:36px;height:36px;border-radius:8px;border:none;cursor:pointer;background:var(--gray-100);font-size:18px;display:flex;align-items:center;justify-content:center;transition:.15s}
+.week-btn:active{background:var(--gray-200)}
+.week-btn:disabled{opacity:.3;cursor:default}
+
+/* Week grid */
+.week-grid{display:flex;gap:4px;overflow-x:auto;padding:4px 0;scrollbar-width:none}
+.week-grid::-webkit-scrollbar{display:none}
+.week-dot{width:32px;height:32px;border-radius:8px;border:none;cursor:pointer;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;background:var(--gray-100);color:var(--gray-500);transition:.15s;flex-shrink:0}
+.week-dot.active{background:var(--indigo);color:#fff;box-shadow:var(--shadow-md)}
+.week-dot.current{outline:2px solid var(--emerald);outline-offset:1px}
+
+/* Progress */
+.progress-track{width:100%;height:10px;background:var(--gray-200);border-radius:5px;overflow:hidden}
+.progress-fill{height:100%;border-radius:5px;transition:width .5s ease}
+.progress-emerald{background:linear-gradient(90deg,#059669,#0d9488)}
+.progress-blue{background:linear-gradient(90deg,#2563eb,#3b82f6)}
+
+/* Water bar */
+.water-bar{display:flex;gap:3px;justify-content:center}
+.water-glass{width:24px;height:32px;border-radius:3px;transition:.3s}
+.water-glass.filled{background:#60a5fa}.water-glass.empty{background:var(--gray-200)}
+
+/* Checklist */
+.check-item{display:flex;align-items:center;gap:12px;padding:14px;border-radius:var(--radius);border:1px solid var(--gray-200);background:#fff;cursor:pointer;transition:.15s;touch-action:manipulation}
+.check-item:active{transform:scale(.98)}
+.check-item.done{background:#ecfdf5;border-color:#a7f3d0}
+.check-circle{width:24px;height:24px;border-radius:50%;border:2px solid var(--gray-300);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:.2s;font-size:14px}
+.check-item.done .check-circle{background:var(--emerald);border-color:var(--emerald);color:#fff}
+.check-label{font-size:13px;font-weight:500;color:var(--gray-700);flex:1}
+.check-item.done .check-label{color:var(--emerald-dark);text-decoration:line-through}
+
+/* Meal card */
+.meal-card{background:#fff;border:1px solid var(--gray-200);border-radius:var(--radius);padding:14px;box-shadow:var(--shadow);transition:.15s}
+.meal-type{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--orange)}
+.meal-cal{font-size:18px;font-weight:800;color:var(--gray-800)}
+
+/* Fitness card */
+.fit-card{background:#fff;border:1px solid var(--gray-200);border-radius:var(--radius);padding:14px;box-shadow:var(--shadow)}
+.fit-card.rest{background:var(--gray-50)}
+.fit-emoji{font-size:28px}
+
+/* Grocery */
+.grocery-cat{font-size:14px;font-weight:700;color:var(--gray-800);padding:10px 0 6px;border-bottom:2px solid var(--gray-200);margin-top:12px}
+.grocery-item{padding:6px 0;font-size:13px;color:var(--gray-600);border-bottom:1px solid var(--gray-100);display:flex;align-items:center;gap:8px}
+.grocery-item:last-child{border-bottom:none}
+.grocery-check{width:18px;height:18px;border-radius:4px;border:2px solid var(--gray-300);cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:11px;transition:.15s}
+.grocery-check.checked{background:var(--emerald);border-color:var(--emerald);color:#fff}
+
+/* Toggle tabs inside meals */
+.toggle{display:flex;background:var(--gray-100);border-radius:8px;padding:3px}
+.toggle-btn{flex:1;padding:8px;border:none;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;background:transparent;color:var(--gray-500);transition:.15s;font-family:inherit}
+.toggle-btn.active{background:#fff;color:var(--gray-800);box-shadow:var(--shadow)}
+
+/* Bottom tab bar */
+.tab-bar{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--gray-200);display:flex;z-index:100;padding-bottom:env(safe-area-inset-bottom,0);box-shadow:0 -2px 10px rgba(0,0,0,.05)}
+.tab{flex:1;display:flex;flex-direction:column;align-items:center;padding:8px 0 6px;cursor:pointer;border:none;background:none;color:var(--gray-400);font-size:10px;font-weight:500;transition:.15s;touch-action:manipulation;font-family:inherit}
+.tab.active{color:var(--emerald)}
+.tab-icon{font-size:20px;margin-bottom:2px}
+.tab-dot{width:4px;height:4px;border-radius:50%;background:var(--emerald);margin-top:2px;opacity:0;transition:.15s}
+.tab.active .tab-dot{opacity:1}
+
+/* Modal */
+.modal-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.5);z-index:200;display:flex;align-items:center;justify-content:center;padding:20px}
+.modal{background:#fff;border-radius:var(--radius-lg);padding:24px;max-width:360px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+
+/* Misc */
+.emoji-icon{font-size:20px;display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:10px;flex-shrink:0}
+.divider{height:1px;background:var(--gray-100);margin:8px 0}
+.tag-row{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px}
+.info-row{display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:1px solid var(--gray-100)}
+.info-row:last-child{border-bottom:none}
+.stat-card{background:#fff;border:1px solid var(--gray-200);border-radius:var(--radius);padding:14px;box-shadow:var(--shadow)}
+.stat-label{font-size:11px;color:var(--gray-500);display:flex;align-items:center;gap:4px}
+.stat-value{font-size:20px;font-weight:800;margin-top:2px}
+.stat-sub{font-size:11px;color:var(--gray-400);margin-top:1px}
+
+/* Animations */
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.page-content{animation:fadeIn .25s ease}
+
+/* Safe area */
+@supports(padding: env(safe-area-inset-bottom)){
+  .tab-bar{padding-bottom:env(safe-area-inset-bottom)}
+  #app{padding-bottom:calc(88px + env(safe-area-inset-bottom))}
+}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+// ========================================
+// ENCORE WELLNESS APP - Complete Data & Logic
+// ========================================
+
+// === MEAL DATA (4 weeks × 7 days × 5 meals) ===
+const MEALS = [
+// ---- WEEK 1: Classic DASH ----
+[
+{day:'Monday',cal:1410,meals:[
+{t:'Breakfast',n:'Oatmeal with Berries & Almonds',c:310,d:'½ cup rolled oats cooked with water, topped with ½ cup mixed berries, 1 tbsp sliced almonds, drizzle of honey. Green tea.'},
+{t:'Snack',n:'Apple with Almond Butter',c:120,d:'1 medium apple with 1 tbsp almond butter.'},
+{t:'Lunch',n:'Grilled Chicken & Chickpea Salad',c:420,d:'3 oz grilled chicken breast over 2 cups mixed greens, ¼ cup chickpeas, cucumber, tomatoes, 1 tbsp olive oil vinaigrette. Small whole wheat roll.'},
+{t:'Snack',n:'Greek Yogurt & Walnuts',c:110,d:'½ cup low-fat plain Greek yogurt with 1 tbsp chopped walnuts.'},
+{t:'Dinner',n:'Baked Salmon with Brown Rice & Broccoli',c:450,d:'4 oz baked salmon with lemon & dill, ½ cup brown rice, 1 cup steamed broccoli with garlic.'}
+]},
+{day:'Tuesday',cal:1380,meals:[
+{t:'Breakfast',n:'Avocado Toast with Poached Egg',c:320,d:'1 slice whole wheat toast, ¼ avocado mashed, 1 poached egg, black pepper. 1 small banana.'},
+{t:'Snack',n:'Carrot Sticks & Hummus',c:100,d:'1 cup carrot sticks with 2 tbsp hummus.'},
+{t:'Lunch',n:'Turkey & Vegetable Soup',c:380,d:'Bowl of turkey vegetable soup (3 oz turkey breast, mixed vegetables, low-sodium broth). 1 small whole wheat roll.'},
+{t:'Snack',n:'Pear & String Cheese',c:130,d:'1 medium pear with 1 low-fat string cheese stick.'},
+{t:'Dinner',n:'Herb Chicken with Sweet Potato',c:450,d:'4 oz herb-crusted chicken breast, 1 medium baked sweet potato, 1 cup steamed green beans with lemon.'}
+]},
+{day:'Wednesday',cal:1390,meals:[
+{t:'Breakfast',n:'Berry Smoothie Bowl',c:300,d:'Blend 1 cup almond milk, ½ banana, ½ cup frozen berries, 1 tbsp flaxseed. Top with 2 tbsp granola.'},
+{t:'Snack',n:'Celery with Peanut Butter',c:110,d:'2 celery stalks with 1 tbsp natural peanut butter.'},
+{t:'Lunch',n:'Black Bean & Quinoa Bowl',c:410,d:'½ cup quinoa, ½ cup black beans, diced tomatoes, corn, cilantro, lime juice, 1 tbsp olive oil.'},
+{t:'Snack',n:'Orange & Almonds',c:120,d:'1 medium orange with 10 raw almonds.'},
+{t:'Dinner',n:'Baked Cod with Roasted Vegetables',c:450,d:'4 oz baked cod with lemon, 1 cup roasted zucchini & bell peppers, ½ cup couscous.'}
+]},
+{day:'Thursday',cal:1400,meals:[
+{t:'Breakfast',n:'Veggie Egg White Scramble',c:290,d:'3 egg whites scrambled with spinach, tomatoes, mushrooms. 1 slice whole wheat toast. ½ cup strawberries.'},
+{t:'Snack',n:'Cottage Cheese & Peach',c:120,d:'½ cup low-fat cottage cheese with ½ sliced peach.'},
+{t:'Lunch',n:'Tuna Salad Lettuce Wraps',c:390,d:'3 oz water-packed tuna with diced celery, 1 tsp olive oil mayo, in large lettuce leaves. Grape tomatoes.'},
+{t:'Snack',n:'Trail Mix',c:140,d:'2 tbsp unsalted mixed nuts & seeds with 1 tbsp dried cranberries.'},
+{t:'Dinner',n:'Chicken Stir-Fry with Brown Rice',c:460,d:'3 oz chicken stir-fried with broccoli, snap peas, carrots, low-sodium soy sauce. ½ cup brown rice.'}
+]},
+{day:'Friday',cal:1390,meals:[
+{t:'Breakfast',n:'Whole Grain Cereal & Banana',c:300,d:'1 cup whole grain bran cereal with 1 cup low-fat milk, ½ sliced banana.'},
+{t:'Snack',n:'Cucumber & Yogurt Dip',c:90,d:'1 cup cucumber slices with ¼ cup low-fat yogurt with dill.'},
+{t:'Lunch',n:'Mediterranean Lentil Salad',c:420,d:'¾ cup lentils, cucumber, tomato, red onion, parsley, lemon-olive oil dressing. 1 small whole wheat pita.'},
+{t:'Snack',n:'Fresh Mixed Berries',c:100,d:'1 cup mixed fresh berries.'},
+{t:'Dinner',n:'Grilled Shrimp & Asparagus',c:480,d:'4 oz grilled shrimp with garlic, 8 asparagus spears roasted, ½ cup quinoa, small side salad.'}
+]},
+{day:'Saturday',cal:1410,meals:[
+{t:'Breakfast',n:'Banana Walnut Pancakes',c:330,d:'2 small whole wheat pancakes with mashed banana, 1 tbsp walnuts, light maple syrup drizzle.'},
+{t:'Snack',n:'Grapefruit Half',c:60,d:'½ pink grapefruit with a sprinkle of cinnamon.'},
+{t:'Lunch',n:'Turkey & Veggie Wrap',c:400,d:'3 oz sliced turkey breast in whole wheat tortilla with lettuce, tomato, avocado slice, mustard.'},
+{t:'Snack',n:'Edamame',c:120,d:'½ cup shelled edamame with a pinch of sea salt.'},
+{t:'Dinner',n:'Roasted Chicken & Root Vegetables',c:500,d:'4 oz skinless chicken thigh with rosemary, ½ cup roasted carrots & parsnips, side salad with balsamic.'}
+]},
+{day:'Sunday',cal:1390,meals:[
+{t:'Breakfast',n:'Veggie Omelet',c:300,d:'2-egg omelet with spinach, bell peppers, onions, 1 oz low-fat feta. 1 slice whole wheat toast.'},
+{t:'Snack',n:'Mango Slices',c:100,d:'½ cup fresh mango slices.'},
+{t:'Lunch',n:'Light Chicken Caesar Salad',c:400,d:'3 oz grilled chicken over romaine, 1 tbsp light Caesar dressing, 1 tbsp parmesan, whole grain croutons.'},
+{t:'Snack',n:'Rice Cake with Avocado',c:110,d:'1 rice cake topped with ¼ mashed avocado and everything seasoning.'},
+{t:'Dinner',n:'Baked Tilapia with Spinach',c:480,d:'4 oz baked tilapia with garlic, 1 cup sautéed spinach, 1 small baked sweet potato.'}
+]}
+],
+// ---- WEEK 2: Mediterranean-Inspired DASH ----
+[
+{day:'Monday',cal:1410,meals:[
+{t:'Breakfast',n:'Greek Yogurt Parfait',c:310,d:'1 cup low-fat Greek yogurt layered with ¼ cup granola, ½ cup mixed berries, drizzle of honey.'},
+{t:'Snack',n:'Dried Apricots & Almonds',c:120,d:'4 dried apricots with 8 raw almonds.'},
+{t:'Lunch',n:'Chicken Pita with Tzatziki',c:420,d:'3 oz grilled chicken in whole wheat pita, cucumber-yogurt sauce, lettuce, tomato, red onion.'},
+{t:'Snack',n:'Bell Pepper Strips & Hummus',c:100,d:'1 cup sliced bell peppers with 2 tbsp hummus.'},
+{t:'Dinner',n:'Lemon Herb Tilapia',c:460,d:'4 oz tilapia with lemon-herb seasoning, ½ cup roasted baby potatoes, mixed green salad.'}
+]},
+{day:'Tuesday',cal:1400,meals:[
+{t:'Breakfast',n:'Ricotta Toast with Strawberries',c:290,d:'1 slice whole wheat toast, 2 tbsp part-skim ricotta, sliced strawberries, honey drizzle.'},
+{t:'Snack',n:'Banana',c:105,d:'1 medium banana.'},
+{t:'Lunch',n:'White Bean & Kale Soup',c:420,d:'Hearty soup with cannellini beans, kale, carrots, celery in low-sodium broth. Small crusty whole wheat bread slice.'},
+{t:'Snack',n:'Cherry Tomatoes & Mozzarella',c:120,d:'½ cup cherry tomatoes with 1 oz fresh mozzarella, basil.'},
+{t:'Dinner',n:'Chicken Shawarma Bowl',c:465,d:'3 oz chicken breast with shawarma spices, ½ cup brown rice, roasted cauliflower, cucumber-tomato salad.'}
+]},
+{day:'Wednesday',cal:1400,meals:[
+{t:'Breakfast',n:'Spinach Mushroom Egg Scramble',c:310,d:'2 eggs scrambled with 1 cup spinach, mushrooms, onion. 1 slice whole wheat toast.'},
+{t:'Snack',n:'Apple Slices with Cinnamon',c:80,d:'1 medium apple sliced with cinnamon sprinkle.'},
+{t:'Lunch',n:'Falafel Salad',c:430,d:'3 baked falafel over mixed greens with cucumber, tomato, red onion, 1 tbsp tahini dressing.'},
+{t:'Snack',n:'Greek Yogurt with Honey',c:110,d:'½ cup low-fat Greek yogurt with 1 tsp honey.'},
+{t:'Dinner',n:'Salmon with Lentils & Asparagus',c:470,d:'4 oz baked salmon, ½ cup cooked green lentils, 6 roasted asparagus spears.'}
+]},
+{day:'Thursday',cal:1400,meals:[
+{t:'Breakfast',n:'Overnight Oats',c:320,d:'½ cup oats soaked in almond milk with 1 tbsp chia seeds, ½ banana, 1 tbsp walnuts. Prep night before.'},
+{t:'Snack',n:'Pear',c:100,d:'1 medium ripe pear.'},
+{t:'Lunch',n:'Mediterranean Tuna Wrap',c:400,d:'3 oz water-packed tuna with olive tapenade, lettuce, tomato in whole wheat wrap.'},
+{t:'Snack',n:'Celery & Almond Butter',c:110,d:'2 celery stalks with 1 tbsp almond butter.'},
+{t:'Dinner',n:'Turkey Meatballs & Pasta',c:470,d:'3 oz turkey meatballs with marinara sauce over ½ cup whole wheat spaghetti. Side of steamed broccoli.'}
+]},
+{day:'Friday',cal:1380,meals:[
+{t:'Breakfast',n:'Fruit & Nut Muesli',c:300,d:'½ cup muesli with 1 cup low-fat milk, topped with sliced almonds and fresh berries.'},
+{t:'Snack',n:'Mixed Nuts',c:120,d:'Small handful (1 oz) of unsalted mixed nuts.'},
+{t:'Lunch',n:'Chickpea & Cucumber Salad',c:400,d:'¾ cup chickpeas with cucumber, tomato, red onion, 1 oz feta, lemon-olive oil dressing.'},
+{t:'Snack',n:'Kiwi',c:80,d:'2 kiwi fruits, peeled and sliced.'},
+{t:'Dinner',n:'Herb-Crusted Cod & Couscous',c:480,d:'4 oz herb-crusted cod, ½ cup whole wheat couscous, 1 cup steamed zucchini with garlic.'}
+]},
+{day:'Saturday',cal:1410,meals:[
+{t:'Breakfast',n:'Shakshuka with Bread',c:340,d:'2 eggs poached in spiced tomato sauce with onions and peppers. 1 slice whole wheat bread for dipping.'},
+{t:'Snack',n:'Grapes',c:90,d:'1 cup fresh grapes.'},
+{t:'Lunch',n:'Grilled Chicken Mediterranean Salad',c:410,d:'3 oz chicken over romaine, olives, cucumber, tomato, red onion, feta, lemon dressing.'},
+{t:'Snack',n:'Whole Wheat Crackers & Hummus',c:120,d:'6 whole wheat crackers with 2 tbsp hummus.'},
+{t:'Dinner',n:'Shrimp with Orzo & Tomatoes',c:450,d:'4 oz shrimp sautéed with garlic, ½ cup orzo, roasted cherry tomatoes, fresh basil.'}
+]},
+{day:'Sunday',cal:1390,meals:[
+{t:'Breakfast',n:'Whole Grain Waffles & Berries',c:320,d:'2 whole grain waffles topped with ½ cup mixed berries and 2 tbsp low-fat yogurt.'},
+{t:'Snack',n:'Orange',c:80,d:'1 large navel orange.'},
+{t:'Lunch',n:'Lentil & Vegetable Stew',c:420,d:'Hearty stew with lentils, carrots, celery, tomatoes, spinach in low-sodium broth. Whole wheat roll.'},
+{t:'Snack',n:'Dark Chocolate & Strawberries',c:100,d:'1 small square dark chocolate (70%+) with 4 strawberries.'},
+{t:'Dinner',n:'Roasted Chicken & Brussels Sprouts',c:470,d:'4 oz roasted chicken breast, ½ cup quinoa, 1 cup roasted Brussels sprouts with balsamic glaze.'}
+]}
+],
+// ---- WEEK 3: Global Flavors DASH ----
+[
+{day:'Monday',cal:1390,meals:[
+{t:'Breakfast',n:'Tropical Green Smoothie',c:300,d:'Blend 1 cup spinach, ½ cup mango, ½ banana, ½ cup pineapple, 1 cup almond milk, 1 tbsp flaxseed.'},
+{t:'Snack',n:'Edamame',c:120,d:'½ cup shelled edamame with pinch of sea salt.'},
+{t:'Lunch',n:'Asian Chicken Lettuce Wraps',c:400,d:'3 oz ground chicken with water chestnuts, ginger, garlic, low-sodium soy sauce in butter lettuce cups. Side of brown rice.'},
+{t:'Snack',n:'Mandarin Orange',c:80,d:'2 small mandarin oranges.'},
+{t:'Dinner',n:'Teriyaki Salmon & Bok Choy',c:490,d:'4 oz salmon with low-sodium teriyaki glaze, ½ cup steamed rice, 1 cup sautéed bok choy with garlic.'}
+]},
+{day:'Tuesday',cal:1390,meals:[
+{t:'Breakfast',n:'Sweet Potato & Black Bean Hash',c:330,d:'Diced sweet potato and black beans sautéed with onions and peppers, topped with 1 fried egg.'},
+{t:'Snack',n:'Baked Plantain Chips',c:100,d:'Small serving of baked plantain chips with lime.'},
+{t:'Lunch',n:'Chicken Tortilla Soup',c:400,d:'Low-sodium chicken broth with shredded chicken, black beans, corn, tomatoes, topped with baked tortilla strips.'},
+{t:'Snack',n:'Jicama Sticks with Lime',c:70,d:'1 cup jicama sticks with fresh lime juice and chili powder.'},
+{t:'Dinner',n:'Fish Tacos with Cabbage Slaw',c:490,d:'3 oz baked cod in 2 corn tortillas with cabbage slaw, avocado crema, side of black beans.'}
+]},
+{day:'Wednesday',cal:1400,meals:[
+{t:'Breakfast',n:'Savory Oatmeal with Egg',c:300,d:'½ cup oats cooked savory with low-sodium broth, topped with 1 soft egg and sliced scallions.'},
+{t:'Snack',n:'Pear & Walnuts',c:130,d:'1 small pear with 5 walnut halves.'},
+{t:'Lunch',n:'Tofu Vegetable Stir-Fry',c:430,d:'4 oz firm tofu stir-fried with broccoli, bell peppers, snap peas, ginger, low-sodium soy. ½ cup brown rice.'},
+{t:'Snack',n:'Cucumber & Seaweed Snacks',c:60,d:'1 cup cucumber slices with roasted seaweed snack pack.'},
+{t:'Dinner',n:'Lemon Chicken & Roasted Cauliflower',c:480,d:'4 oz lemon-herb chicken breast, 1 cup roasted cauliflower, ½ cup quinoa.'}
+]},
+{day:'Thursday',cal:1410,meals:[
+{t:'Breakfast',n:'PB Banana Smoothie with Oats',c:320,d:'Blend 1 cup almond milk, 1 banana, 1 tbsp peanut butter, ¼ cup oats, ice.'},
+{t:'Snack',n:'Mango Slices',c:100,d:'½ cup fresh mango cubes.'},
+{t:'Lunch',n:'Caribbean Black Bean Soup',c:420,d:'Black bean soup with cumin, lime, cilantro over ¼ cup rice. Side of mixed greens.'},
+{t:'Snack',n:'Almonds & Dried Cranberries',c:120,d:'10 almonds with 1 tbsp dried cranberries.'},
+{t:'Dinner',n:'Herb Turkey with Collard Greens',c:450,d:'4 oz herb-baked turkey breast, ½ cup mashed sweet potato, 1 cup sautéed collard greens with garlic.'}
+]},
+{day:'Friday',cal:1395,meals:[
+{t:'Breakfast',n:'Huevos Rancheros',c:340,d:'2 eggs over 1 corn tortilla with black beans, salsa, diced avocado, cilantro.'},
+{t:'Snack',n:'Apple',c:95,d:'1 medium apple.'},
+{t:'Lunch',n:'Vietnamese-Inspired Chicken Salad',c:390,d:'3 oz chicken with shredded cabbage, carrots, herbs, rice noodles, lime-ginger dressing.'},
+{t:'Snack',n:'Rice Cake with Almond Butter',c:110,d:'1 rice cake with 1 tbsp almond butter.'},
+{t:'Dinner',n:'Shrimp with Cilantro Lime Rice',c:460,d:'4 oz grilled shrimp, ½ cup cilantro lime rice, ½ cup black beans, roasted peppers.'}
+]},
+{day:'Saturday',cal:1410,meals:[
+{t:'Breakfast',n:'Whole Grain French Toast',c:310,d:'2 slices whole wheat French toast with ½ cup mixed berries and light maple syrup.'},
+{t:'Snack',n:'Trail Mix',c:130,d:'2 tbsp mixed nuts with dried fruit.'},
+{t:'Lunch',n:'Mild Chicken Curry & Rice',c:430,d:'3 oz chicken in mild curry sauce with vegetables, ½ cup brown basmati rice.'},
+{t:'Snack',n:'Yogurt with Honey',c:100,d:'½ cup low-fat yogurt with 1 tsp honey.'},
+{t:'Dinner',n:'Cod with Mango Salsa',c:440,d:'4 oz baked cod topped with fresh mango salsa, ½ cup wild rice, 1 cup steamed broccoli.'}
+]},
+{day:'Sunday',cal:1390,meals:[
+{t:'Breakfast',n:'Breakfast Burrito',c:330,d:'Scrambled eggs, black beans, peppers, onions in whole wheat tortilla with salsa.'},
+{t:'Snack',n:'Watermelon Cubes',c:80,d:'1 cup fresh watermelon cubes.'},
+{t:'Lunch',n:'Asian Salmon Salad',c:400,d:'3 oz baked salmon over mixed greens with edamame, mandarin segments, sesame-ginger dressing.'},
+{t:'Snack',n:'Cottage Cheese & Pineapple',c:110,d:'½ cup low-fat cottage cheese with ¼ cup pineapple chunks.'},
+{t:'Dinner',n:'Herb Roasted Chicken & Vegetables',c:470,d:'4 oz roasted chicken, ½ cup roasted root vegetables (carrots, turnips), side salad.'}
+]}
+],
+// ---- WEEK 4: Comfort Foods Made Healthy ----
+[
+{day:'Monday',cal:1410,meals:[
+{t:'Breakfast',n:'Cinnamon Raisin Oatmeal',c:310,d:'½ cup oats with cinnamon, 2 tbsp raisins, 1 tbsp walnuts, splash of low-fat milk.'},
+{t:'Snack',n:'Banana with Almond Butter',c:130,d:'1 small banana with 1 tbsp almond butter.'},
+{t:'Lunch',n:'Crustless Chicken Pot Pie',c:420,d:'Chicken & vegetable filling (3 oz chicken, peas, carrots, potatoes in light gravy). Side of greens.'},
+{t:'Snack',n:'Apple Slices',c:80,d:'1 medium apple, sliced.'},
+{t:'Dinner',n:'Turkey Meatloaf & Mashed Cauliflower',c:470,d:'4 oz turkey meatloaf with low-sodium ketchup glaze, 1 cup mashed cauliflower, steamed green beans.'}
+]},
+{day:'Tuesday',cal:1410,meals:[
+{t:'Breakfast',n:'Veggie & Cheese Omelet',c:320,d:'2-egg omelet with peppers, onions, 1 oz low-fat cheddar. 1 slice whole wheat toast.'},
+{t:'Snack',n:'Grapes & String Cheese',c:120,d:'½ cup grapes with 1 low-fat string cheese.'},
+{t:'Lunch',n:'Chicken Noodle Soup',c:380,d:'Homemade with whole wheat noodles, 3 oz chicken breast, carrots, celery, low-sodium broth.'},
+{t:'Snack',n:'Hummus & Whole Grain Crackers',c:120,d:'2 tbsp hummus with 6 whole grain crackers.'},
+{t:'Dinner',n:'Light Chicken Parmesan & Pasta',c:470,d:'3 oz baked chicken with marinara and 1 oz mozzarella, ½ cup whole wheat pasta, side salad.'}
+]},
+{day:'Wednesday',cal:1390,meals:[
+{t:'Breakfast',n:'Blueberry Muffin & Yogurt',c:300,d:'1 small whole wheat blueberry muffin with ½ cup low-fat Greek yogurt.'},
+{t:'Snack',n:'Celery & Peanut Butter',c:110,d:'2 celery stalks with 1 tbsp natural peanut butter.'},
+{t:'Lunch',n:'Stuffed Bell Peppers',c:420,d:'Bell peppers stuffed with ground turkey, brown rice, diced tomatoes, herbs.'},
+{t:'Snack',n:'Peach',c:70,d:'1 medium fresh peach.'},
+{t:'Dinner',n:'Salmon Patties & Brown Rice',c:490,d:'2 salmon patties (4 oz total), ½ cup brown rice, vinegar-based coleslaw.'}
+]},
+{day:'Thursday',cal:1410,meals:[
+{t:'Breakfast',n:'Breakfast Sweet Potato Bowl',c:310,d:'½ baked sweet potato topped with Greek yogurt, 1 tbsp pecans, cinnamon, drizzle of honey.'},
+{t:'Snack',n:'Orange & Almonds',c:120,d:'1 orange with 8 almonds.'},
+{t:'Lunch',n:'Turkey Chili with Beans',c:430,d:'Ground turkey chili with kidney beans, tomatoes, peppers, cumin. Topped with 1 tbsp Greek yogurt.'},
+{t:'Snack',n:'Cottage Cheese & Berries',c:100,d:'½ cup low-fat cottage cheese with ¼ cup blueberries.'},
+{t:'Dinner',n:'Herb Chicken & Baked Potato',c:450,d:'4 oz herb chicken breast, 1 small baked potato with 1 tbsp Greek yogurt, steamed broccoli.'}
+]},
+{day:'Friday',cal:1390,meals:[
+{t:'Breakfast',n:'PB Banana Toast',c:310,d:'1 slice whole grain toast with 1 tbsp peanut butter, ½ sliced banana, chia seeds.'},
+{t:'Snack',n:'Cucumber & Tzatziki',c:80,d:'1 cup cucumber slices with 2 tbsp tzatziki.'},
+{t:'Lunch',n:'Tuna Melt & Side Salad',c:420,d:'Open-faced tuna melt on whole wheat with low-fat cheese. Mixed green side salad.'},
+{t:'Snack',n:'Mixed Berries',c:90,d:'1 cup mixed fresh berries.'},
+{t:'Dinner',n:'Shrimp & Grits with Greens',c:490,d:'4 oz shrimp over ½ cup whole grain grits, 1 cup sautéed collard greens with garlic.'}
+]},
+{day:'Saturday',cal:1410,meals:[
+{t:'Breakfast',n:'Veggie Frittata & Fruit',c:320,d:'Slice of vegetable frittata (eggs, zucchini, tomatoes, herbs). ½ cup mixed fruit.'},
+{t:'Snack',n:'Trail Mix',c:130,d:'Small handful of unsalted mixed nuts and dried fruit.'},
+{t:'Lunch',n:'BBQ Chicken Salad',c:410,d:'3 oz chicken with homemade low-sodium BBQ sauce over romaine, corn, black beans, tomato.'},
+{t:'Snack',n:'Apple with Cinnamon',c:80,d:'1 sliced apple sprinkled with cinnamon.'},
+{t:'Dinner',n:'Oven-Baked Fish & Chips',c:470,d:'4 oz baked cod with herbs, oven-baked potato wedges, ½ cup peas.'}
+]},
+{day:'Sunday',cal:1400,meals:[
+{t:'Breakfast',n:'Whole Wheat Pancakes & Strawberries',c:310,d:'2 small whole wheat buttermilk pancakes with ½ cup fresh strawberries, light maple syrup.'},
+{t:'Snack',n:'Yogurt & Granola',c:120,d:'½ cup low-fat yogurt with 2 tbsp low-sugar granola.'},
+{t:'Lunch',n:'Chicken & Vegetable Stew',c:430,d:'Hearty stew with 3 oz chicken, potatoes, carrots, celery, peas in low-sodium broth. Small whole wheat biscuit.'},
+{t:'Snack',n:'Dark Chocolate & Almonds',c:120,d:'1 small square dark chocolate with 6 almonds.'},
+{t:'Dinner',n:'Roasted Turkey & Sweet Potato',c:420,d:'4 oz roasted turkey breast, 1 small sweet potato, steamed green beans, side salad.'}
+]}
+]
+];
+
+// === GROCERY LISTS (4 weeks) ===
+const GROCERIES = [
+// Week 1
+[
+{cat:'🥬 Produce',items:['Mixed berries (2 pints)','Strawberries (1 pint)','Bananas (4)','Apples (3)','Pears (2)','Oranges (2)','Grapefruit (1)','Mango (1)','Lemons (3)','Limes (2)','Avocados (2)','Broccoli (2 heads)','Green beans (1 lb)','Spinach (2 bags)','Mixed salad greens (2 bags)','Romaine lettuce (1 head)','Butter lettuce (1 head)','Carrots (1 lb)','Celery (1 bunch)','Cucumber (3)','Cherry tomatoes (2 pints)','Bell peppers (3)','Mushrooms (8 oz)','Zucchini (2)','Asparagus (1 bunch)','Sweet potatoes (3)','Parsnips (2)','Onions (3)','Garlic (1 head)','Fresh dill','Fresh rosemary','Fresh cilantro']},
+{cat:'🍗 Proteins',items:['Chicken breasts (2 lbs)','Chicken thighs, skinless (1 lb)','Turkey breast, sliced deli (8 oz)','Salmon fillets (2 × 4 oz)','Cod fillet (4 oz)','Tilapia fillet (4 oz)','Shrimp, peeled (8 oz)','Canned tuna in water (2 cans)']},
+{cat:'🥚 Dairy & Eggs',items:['Eggs (1 dozen)','Low-fat milk (½ gallon)','Low-fat Greek yogurt (32 oz)','Low-fat cottage cheese (16 oz)','Low-fat string cheese (4 pack)','Low-fat feta cheese (4 oz)','Parmesan cheese (small block)','Unsweetened almond milk (½ gallon)']},
+{cat:'🌾 Grains & Bread',items:['Rolled oats (1 canister)','Brown rice (1 lb)','Quinoa (12 oz)','Couscous (12 oz)','Whole wheat bread (1 loaf)','Small whole wheat rolls (6 pack)','Whole wheat tortillas (small pack)','Whole grain bran cereal (1 box)','Low-sugar granola (12 oz)','Rice cakes (1 pack)','Whole grain croutons (small bag)']},
+{cat:'🥫 Pantry',items:['Extra virgin olive oil','Balsamic vinegar','Low-sodium soy sauce','Low-sodium chicken broth (2 cartons)','Canned chickpeas (1 can)','Canned black beans (2 cans)','Dried lentils (1 lb)','Hummus (8 oz tub)','Almond butter (small jar)','Natural peanut butter (small jar)','Olive oil mayo (small jar)','Honey','Pure maple syrup','Mustard','Ground flaxseed','Dried cranberries','Everything bagel seasoning','Light Caesar dressing','Olive oil vinaigrette']},
+{cat:'🥜 Nuts & Seeds',items:['Raw almonds (6 oz)','Walnuts (4 oz)','Unsalted trail mix (6 oz)']},
+{cat:'❄️ Frozen',items:['Frozen mixed berries (1 bag)','Edamame, shelled (1 bag)','Frozen corn (small bag)']}
+],
+// Week 2
+[
+{cat:'🥬 Produce',items:['Mixed berries (2 pints)','Strawberries (1 pint)','Bananas (3)','Grapes (1 bunch)','Oranges (2)','Kiwi (4)','Pears (2)','Apples (2)','Lemons (4)','Avocado (1)','Broccoli (1 head)','Brussels sprouts (1 lb)','Cauliflower (1 head)','Asparagus (1 bunch)','Zucchini (2)','Kale (1 bunch)','Spinach (2 bags)','Mixed salad greens (2 bags)','Romaine lettuce (1 head)','Cucumbers (3)','Cherry tomatoes (2 pints)','Bell peppers (3)','Red onions (2)','Yellow onions (2)','Garlic (1 head)','Mushrooms (8 oz)','Carrots (1 lb)','Celery (1 bunch)','Baby potatoes (1 lb)','Fresh basil','Fresh parsley','Fresh dill']},
+{cat:'🍗 Proteins',items:['Chicken breasts (2 lbs)','Ground turkey (1 lb)','Tilapia fillets (2 × 4 oz)','Salmon fillets (2 × 4 oz)','Cod fillet (4 oz)','Shrimp, peeled (8 oz)','Canned tuna in water (2 cans)']},
+{cat:'🥚 Dairy & Eggs',items:['Eggs (1 dozen)','Low-fat milk (½ gallon)','Unsweetened almond milk (½ gallon)','Low-fat Greek yogurt (32 oz)','Part-skim ricotta (8 oz)','Fresh mozzarella (4 oz)','Low-fat feta cheese (4 oz)']},
+{cat:'🌾 Grains & Bread',items:['Rolled oats (if needed)','Muesli (12 oz)','Brown rice (if needed)','Quinoa (if needed)','Whole wheat couscous (12 oz)','Orzo pasta (8 oz)','Whole wheat spaghetti (8 oz)','Whole wheat bread (1 loaf)','Whole wheat pita (4 pack)','Whole wheat wraps (small pack)','Whole grain waffles, frozen (1 box)','Low-sugar granola (if needed)','Whole wheat crackers (1 box)']},
+{cat:'🥫 Pantry',items:['Cannellini beans (2 cans)','Chickpeas (1 can)','Marinara sauce, low-sodium (1 jar)','Canned diced tomatoes (1 can)','Low-sodium chicken broth (2 cartons)','Tahini (small jar)','Olive tapenade (small jar)','Hummus (8 oz)','Dried apricots','Chia seeds','Dark chocolate 70%+ (small bar)','Balsamic glaze','Shawarma spice blend','Honey']},
+{cat:'🥜 Nuts & Seeds',items:['Raw almonds (6 oz)','Walnuts (4 oz)','Unsalted mixed nuts (6 oz)']},
+{cat:'❄️ Frozen',items:['Frozen mixed berries (1 bag)']}
+],
+// Week 3
+[
+{cat:'🥬 Produce',items:['Mango (2)','Pineapple (1 small or canned in juice)','Bananas (4)','Watermelon (small or pre-cut)','Apples (2)','Pears (1)','Mandarin oranges (bag)','Limes (4)','Lemons (2)','Avocados (2)','Bok choy (2 bunches)','Broccoli (2 heads)','Cauliflower (1 head)','Collard greens (1 bunch)','Spinach (2 bags)','Mixed salad greens (1 bag)','Cabbage, green (1 head)','Bell peppers (4)','Snap peas (8 oz)','Carrots (1 lb)','Cucumber (2)','Cherry tomatoes (1 pint)','Jicama (1)','Scallions (1 bunch)','Onions (3)','Garlic (1 head)','Ginger root (1 piece)','Sweet potatoes (3)','Turnips (2)','Fresh cilantro','Fresh basil','Fresh mint']},
+{cat:'🍗 Proteins',items:['Chicken breasts (1.5 lbs)','Ground chicken (8 oz)','Turkey breast (1 lb)','Salmon fillets (2 × 4 oz)','Cod fillet (4 oz)','Shrimp, peeled (8 oz)','Firm tofu (14 oz block)']},
+{cat:'🥚 Dairy & Eggs',items:['Eggs (1 dozen)','Low-fat milk or almond milk (½ gallon)','Low-fat Greek yogurt (16 oz)','Low-fat cottage cheese (16 oz)']},
+{cat:'🌾 Grains & Bread',items:['Rolled oats (if needed)','Brown rice (if needed)','Brown basmati rice (1 lb)','Wild rice (8 oz)','Quinoa (if needed)','Whole wheat bread (1 loaf)','Whole wheat tortillas (small pack)','Corn tortillas (small pack)','Rice cakes (if needed)','Rice noodles, thin (8 oz)']},
+{cat:'🥫 Pantry',items:['Black beans (3 cans)','Low-sodium chicken broth (2 cartons)','Canned diced tomatoes (2 cans)','Water chestnuts (1 small can)','Low-sodium soy sauce (if needed)','Low-sodium teriyaki sauce','Sesame-ginger dressing','Curry paste or powder (mild)','Cumin','Chili powder','Almond butter','Peanut butter','Salsa (16 oz jar)','Coconut milk, light (1 can)','Roasted seaweed snacks (1 pack)','Plantain chips, baked (small bag)','Dried cranberries','Flaxseed (if needed)']},
+{cat:'🥜 Nuts & Seeds',items:['Almonds (6 oz)','Walnuts (4 oz)','Unsalted trail mix (6 oz)']},
+{cat:'❄️ Frozen',items:['Edamame, shelled (1 bag)','Frozen mixed berries (1 bag)','Frozen corn (if needed)']}
+],
+// Week 4
+[
+{cat:'🥬 Produce',items:['Strawberries (1 pint)','Blueberries (1 pint)','Mixed berries (1 pint)','Bananas (3)','Apples (3)','Oranges (2)','Peaches (2)','Lemons (2)','Avocado (1)','Broccoli (2 heads)','Green beans (1 lb)','Collard greens (1 bunch)','Spinach (1 bag)','Romaine lettuce (1 head)','Mixed salad greens (2 bags)','Zucchini (2)','Bell peppers (4)','Carrots (1 lb)','Celery (1 bunch)','Cucumbers (2)','Tomatoes (4)','Cherry tomatoes (1 pint)','Corn on the cob (2)','Cabbage (½ head)','Potatoes (3 medium)','Sweet potatoes (3)','Onions (3)','Garlic (1 head)','Fresh herbs (parsley, rosemary)']},
+{cat:'🍗 Proteins',items:['Chicken breasts (2 lbs)','Ground turkey (1.5 lbs)','Turkey breast, whole (2 lbs or sliced 1 lb)','Salmon (8 oz, canned or fillets)','Cod fillets (2 × 4 oz)','Shrimp, peeled (8 oz)','Canned tuna in water (2 cans)']},
+{cat:'🥚 Dairy & Eggs',items:['Eggs (1 dozen)','Low-fat milk or buttermilk (½ gallon)','Low-fat Greek yogurt (32 oz)','Low-fat cottage cheese (16 oz)','Low-fat cheddar cheese (4 oz)','Low-fat mozzarella (4 oz)','Low-fat string cheese (4 pack)']},
+{cat:'🌾 Grains & Bread',items:['Rolled oats (if needed)','Brown rice (if needed)','Whole grain grits (1 box)','Whole wheat bread (1 loaf)','Whole wheat biscuit mix or frozen (small)','Whole grain crackers (1 box)','Whole wheat pancake mix (small box)','Low-sugar granola (if needed)','Whole wheat pasta (8 oz)']},
+{cat:'🥫 Pantry',items:['Kidney beans (1 can)','Black beans (1 can)','Canned diced tomatoes (2 cans)','Low-sodium chicken broth (2 cartons)','Marinara sauce, low-sodium (1 jar)','Low-sodium ketchup','BBQ sauce, low-sodium (small)','Hummus (8 oz)','Tzatziki (8 oz)','Peanut butter','Almond butter','Pecans (small bag)','Dark chocolate 70%+ (small bar)','Cinnamon','Cumin','Raisins (small box)','Chia seeds','Honey','Pure maple syrup','Apple cider vinegar']},
+{cat:'🥜 Nuts & Seeds',items:['Almonds (6 oz)','Walnuts (4 oz)','Pecans (4 oz)','Unsalted trail mix (6 oz)']},
+{cat:'❄️ Frozen',items:['Frozen mixed berries (1 bag)','Frozen peas (1 bag)','Frozen corn (if needed)']}
+]
+];
+
+// === FITNESS DATA (12 weeks) ===
+const FITNESS = [
+{wk:1,phase:'Foundation',color:'badge-blue',goal:'Build the habit of daily movement with easy walks and gentle stretching.',days:[
+{d:'Mon',nm:'Easy Walk',dur:'10 min',desc:'Comfortable-pace neighborhood walk. Focus on steady breathing.',tp:'cardio'},
+{d:'Tue',nm:'Gentle Stretch',dur:'10 min',desc:'Neck rolls, shoulder shrugs, seated hamstring stretch, ankle circles. Hold 15-30 sec each.',tp:'flex'},
+{d:'Wed',nm:'Easy Walk',dur:'10 min',desc:'Walk a slightly different route for variety.',tp:'cardio'},
+{d:'Thu',nm:'Rest Day',dur:'—',desc:'Light household activity only. Focus on hydration.',tp:'rest'},
+{d:'Fri',nm:'Easy Walk',dur:'10 min',desc:'Comfortable walk. Notice how your body feels.',tp:'cardio'},
+{d:'Sat',nm:'Gentle Stretch',dur:'10 min',desc:'Standing and seated stretches. Hold each 15-30 seconds.',tp:'flex'},
+{d:'Sun',nm:'Rest Day',dur:'—',desc:'Full rest. A casual stroll is fine if you feel like it.',tp:'rest'}
+]},
+{wk:2,phase:'Foundation',color:'badge-blue',goal:'Stay consistent. Slightly longer walks and introduce chair exercises.',days:[
+{d:'Mon',nm:'Walk',dur:'12 min',desc:'Slightly longer walk at comfortable pace.',tp:'cardio'},
+{d:'Tue',nm:'Chair Exercises',dur:'10 min',desc:'Seated marches, arm raises, seated leg extensions. 10 reps each, 2 rounds.',tp:'strength'},
+{d:'Wed',nm:'Walk',dur:'12 min',desc:'Comfortable-pace walk with gentle arm swings.',tp:'cardio'},
+{d:'Thu',nm:'Gentle Stretch',dur:'10 min',desc:'Lower body focus: calf stretch, quad stretch (use chair), hip circles.',tp:'flex'},
+{d:'Fri',nm:'Walk',dur:'12 min',desc:'Conversational-pace walk.',tp:'cardio'},
+{d:'Sat',nm:'Chair Exercises',dur:'10 min',desc:'Seated marches, wall push-ups (5-8 reps), seated arm circles.',tp:'strength'},
+{d:'Sun',nm:'Rest Day',dur:'—',desc:'Rest and recover.',tp:'rest'}
+]},
+{wk:3,phase:'Building',color:'badge-green',goal:'15-minute walks and light strength training.',days:[
+{d:'Mon',nm:'Walk',dur:'15 min',desc:'Brisk walk. Maintain steady pace throughout.',tp:'cardio'},
+{d:'Tue',nm:'Strength & Stretch',dur:'15 min',desc:'Wall push-ups (2×8), chair squats (2×8), seated leg raises (2×10). End with stretching.',tp:'strength'},
+{d:'Wed',nm:'Walk',dur:'15 min',desc:'Walk with purpose. Swing arms naturally.',tp:'cardio'},
+{d:'Thu',nm:'Light Stretch',dur:'10 min',desc:'Optional gentle stretching or rest day.',tp:'rest'},
+{d:'Fri',nm:'Walk',dur:'15 min',desc:'Try walking a bit faster than Monday.',tp:'cardio'},
+{d:'Sat',nm:'Strength & Stretch',dur:'15 min',desc:'Wall push-ups (2×10), calf raises (2×10), chair squats (2×8). Stretch.',tp:'strength'},
+{d:'Sun',nm:'Rest Day',dur:'—',desc:'Rest and recovery.',tp:'rest'}
+]},
+{wk:4,phase:'Building',color:'badge-green',goal:'18-minute walks and building strength foundations.',days:[
+{d:'Mon',nm:'Walk',dur:'18 min',desc:'Moderate-pace walk. Keep consistent pace.',tp:'cardio'},
+{d:'Tue',nm:'Strength Circuit',dur:'15 min',desc:'Wall push-ups (2×10), chair squats (2×10), side leg raises (2×8 each), bicep curls with water bottles (2×10).',tp:'strength'},
+{d:'Wed',nm:'Walk',dur:'18 min',desc:'Moderate-pace walk with arm movements.',tp:'cardio'},
+{d:'Thu',nm:'Flexibility',dur:'15 min',desc:'Full body stretching. Hold each stretch 20-30 seconds.',tp:'flex'},
+{d:'Fri',nm:'Walk',dur:'18 min',desc:'Moderate walk. Notice your improved stamina!',tp:'cardio'},
+{d:'Sat',nm:'Strength Circuit',dur:'15 min',desc:'Repeat Tuesday circuit with better form.',tp:'strength'},
+{d:'Sun',nm:'Rest Day',dur:'—',desc:'Rest and enjoy your progress.',tp:'rest'}
+]},
+{wk:5,phase:'Progress',color:'badge-yellow',goal:'Reach 20-minute walks. More challenging strength work.',days:[
+{d:'Mon',nm:'Walk',dur:'20 min',desc:'Brisk walk. Add a small incline if available.',tp:'cardio'},
+{d:'Tue',nm:'Strength Training',dur:'20 min',desc:'Wall push-ups (3×10), chair squats (3×10), standing leg raises (2×10 each), resistance band rows (2×10).',tp:'strength'},
+{d:'Wed',nm:'Walk',dur:'20 min',desc:'Moderate to brisk walk.',tp:'cardio'},
+{d:'Thu',nm:'Stretch & Balance',dur:'15 min',desc:'Stretching + single-leg balance holds (hold chair). 15 sec each leg × 3.',tp:'flex'},
+{d:'Fri',nm:'Walk',dur:'20 min',desc:'Brisk walk. Building real endurance!',tp:'cardio'},
+{d:'Sat',nm:'Strength Training',dur:'20 min',desc:'Full body: push-ups, squats, leg raises, bicep curls, overhead press with water bottles.',tp:'strength'},
+{d:'Sun',nm:'Optional Walk',dur:'10 min',desc:'Optional recovery walk or full rest.',tp:'rest'}
+]},
+{wk:6,phase:'Progress',color:'badge-yellow',goal:'22-minute walks with intervals. Build strength consistency.',days:[
+{d:'Mon',nm:'Walk',dur:'22 min',desc:'Brisk walk. Focus on good posture.',tp:'cardio'},
+{d:'Tue',nm:'Strength Training',dur:'20 min',desc:'Push-ups (3×10), squats (3×10), step-ups on low step (2×8 each), resistance band work.',tp:'strength'},
+{d:'Wed',nm:'Interval Walk',dur:'22 min',desc:'3 min normal pace, 2 min faster pace. Repeat throughout.',tp:'cardio'},
+{d:'Thu',nm:'Yoga / Stretch',dur:'20 min',desc:'Gentle chair yoga or standing poses. Focus on breathing.',tp:'flex'},
+{d:'Fri',nm:'Walk',dur:'22 min',desc:'Brisk walk with good arm swing.',tp:'cardio'},
+{d:'Sat',nm:'Strength Training',dur:'20 min',desc:'Repeat Tuesday routine. Improve reps or form.',tp:'strength'},
+{d:'Sun',nm:'Rest Day',dur:'—',desc:'Well-earned rest!',tp:'rest'}
+]},
+{wk:7,phase:'Advancing',color:'badge-orange',goal:'25-minute walks. More challenging exercises.',days:[
+{d:'Mon',nm:'Walk',dur:'25 min',desc:'Brisk 25-minute walk. Great milestone!',tp:'cardio'},
+{d:'Tue',nm:'Strength Circuit',dur:'25 min',desc:'Wall push-ups ×12, squats ×12, lunges ×8 each (hold chair), calf raises ×15, curls ×12. 3 rounds.',tp:'strength'},
+{d:'Wed',nm:'Walk + Stairs',dur:'25 min',desc:'20 min walk + 5 min stair climbing or step-ups.',tp:'cardio'},
+{d:'Thu',nm:'Flexibility & Balance',dur:'20 min',desc:'Stretch + balance: tandem stance, single-leg holds, heel-to-toe walks.',tp:'flex'},
+{d:'Fri',nm:'Walk',dur:'25 min',desc:'Brisk walk with faster-pace intervals.',tp:'cardio'},
+{d:'Sat',nm:'Strength Circuit',dur:'25 min',desc:'Full body circuit. Increase reps where comfortable.',tp:'strength'},
+{d:'Sun',nm:'Gentle Walk',dur:'15 min',desc:'Easy recovery walk or rest.',tp:'rest'}
+]},
+{wk:8,phase:'Advancing',color:'badge-orange',goal:'28-minute walks and harder exercises. Building confidence!',days:[
+{d:'Mon',nm:'Walk',dur:'28 min',desc:'Brisk pace throughout. You\'re getting stronger!',tp:'cardio'},
+{d:'Tue',nm:'Strength Training',dur:'25 min',desc:'Modified push-ups, squats, lunges, band rows, overhead press, plank hold 15 sec × 3.',tp:'strength'},
+{d:'Wed',nm:'Interval Walk',dur:'28 min',desc:'3 min moderate / 2 min brisk. Repeat.',tp:'cardio'},
+{d:'Thu',nm:'Yoga / Flexibility',dur:'20 min',desc:'Gentle yoga flow or comprehensive stretching.',tp:'flex'},
+{d:'Fri',nm:'Walk',dur:'28 min',desc:'Steady brisk walk.',tp:'cardio'},
+{d:'Sat',nm:'Strength Training',dur:'25 min',desc:'Full circuit. Challenge with extra reps.',tp:'strength'},
+{d:'Sun',nm:'Rest Day',dur:'—',desc:'Recovery day. Reflect on your progress!',tp:'rest'}
+]},
+{wk:9,phase:'Strengthening',color:'badge-red',goal:'Hit the 30-minute walk milestone! Full strength routine.',days:[
+{d:'Mon',nm:'Walk',dur:'30 min',desc:'30-minute milestone! Brisk pace with good posture.',tp:'cardio'},
+{d:'Tue',nm:'Strength Training',dur:'30 min',desc:'Push-ups (3×12), squats (3×12), lunges (3×10 each), rows (3×12), plank (3×20 sec), calf raises (3×15).',tp:'strength'},
+{d:'Wed',nm:'Interval Walk',dur:'30 min',desc:'2 min brisk / 1 min moderate pace. Repeat.',tp:'cardio'},
+{d:'Thu',nm:'Flexibility & Core',dur:'20 min',desc:'Stretching + modified planks, seated twists, bird dogs.',tp:'flex'},
+{d:'Fri',nm:'Walk',dur:'30 min',desc:'Steady brisk walk. Enjoy the movement!',tp:'cardio'},
+{d:'Sat',nm:'Strength Training',dur:'30 min',desc:'Full body workout. Getting so much stronger!',tp:'strength'},
+{d:'Sun',nm:'Active Recovery',dur:'15 min',desc:'Gentle walk or light stretching.',tp:'rest'}
+]},
+{wk:10,phase:'Strengthening',color:'badge-red',goal:'Maintain 30-min walks and push strength limits safely.',days:[
+{d:'Mon',nm:'Walk',dur:'30 min',desc:'Brisk walk. Try a new route for variety.',tp:'cardio'},
+{d:'Tue',nm:'Upper Body + Core',dur:'30 min',desc:'Push-ups, rows, overhead press + planks, bird dogs, dead bugs. 3 sets each.',tp:'strength'},
+{d:'Wed',nm:'Walk + Hills',dur:'30 min',desc:'Include inclines or stairs for extra challenge.',tp:'cardio'},
+{d:'Thu',nm:'Yoga / Stretch',dur:'25 min',desc:'Longer flexibility session. Focus on tight areas.',tp:'flex'},
+{d:'Fri',nm:'Walk',dur:'30 min',desc:'Brisk walk with good form.',tp:'cardio'},
+{d:'Sat',nm:'Lower Body Strength',dur:'30 min',desc:'Squats, lunges, calf raises, step-ups, glute bridges. 3 sets of 12.',tp:'strength'},
+{d:'Sun',nm:'Rest Day',dur:'—',desc:'Well-deserved rest.',tp:'rest'}
+]},
+{wk:11,phase:'Maintenance',color:'badge-purple',goal:'35-minute walks. Establish your long-term routine.',days:[
+{d:'Mon',nm:'Walk',dur:'35 min',desc:'Brisk 35-minute walk. You\'ve come so far!',tp:'cardio'},
+{d:'Tue',nm:'Full Body Strength',dur:'30 min',desc:'Complete circuit: all major muscle groups. 3 sets, 12-15 reps.',tp:'strength'},
+{d:'Wed',nm:'Interval Walk',dur:'35 min',desc:'Alternate brisk and moderate pace every 2-3 minutes.',tp:'cardio'},
+{d:'Thu',nm:'Flexibility & Balance',dur:'25 min',desc:'Full body stretch plus advanced balance work.',tp:'flex'},
+{d:'Fri',nm:'Walk',dur:'35 min',desc:'Strong brisk walk. Almost at the finish line!',tp:'cardio'},
+{d:'Sat',nm:'Full Body Strength',dur:'30 min',desc:'Complete workout. Push yourself safely.',tp:'strength'},
+{d:'Sun',nm:'Active Recovery',dur:'15 min',desc:'Light walk or gentle stretching.',tp:'rest'}
+]},
+{wk:12,phase:'Maintenance',color:'badge-purple',goal:'Celebrate your transformation! This is your new lifestyle. 🎉',days:[
+{d:'Mon',nm:'Power Walk',dur:'40 min',desc:'Strong 40-minute walk! From 10 min to 40 — incredible!',tp:'cardio'},
+{d:'Tue',nm:'Full Body Strength',dur:'30 min',desc:'Your established strength routine. Strong and capable!',tp:'strength'},
+{d:'Wed',nm:'Interval Walk',dur:'35 min',desc:'Interval walking to keep challenging yourself.',tp:'cardio'},
+{d:'Thu',nm:'Yoga / Flexibility',dur:'25 min',desc:'Deep stretch and mindfulness. Celebrate your body.',tp:'flex'},
+{d:'Fri',nm:'Power Walk',dur:'40 min',desc:'You are doing amazing things for your health!',tp:'cardio'},
+{d:'Sat',nm:'Full Body Strength',dur:'30 min',desc:'Strong finish to an incredible 12 weeks!',tp:'strength'},
+{d:'Sun',nm:'Celebration Walk',dur:'20 min',desc:'Reflect on your amazing 12-week journey. You did it! 🎉',tp:'rest'}
+]}
+];
+
+const TASKS = [
+{id:'water',label:'Drink 8 glasses of water',icon:'💧'},
+{id:'breakfast',label:'Eat DASH breakfast',icon:'🍳'},
+{id:'lunch',label:'Eat DASH lunch',icon:'🥗'},
+{id:'dinner',label:'Eat DASH dinner',icon:'🍽️'},
+{id:'snacks',label:'Healthy snacks only',icon:'🍎'},
+{id:'exercise',label:'Complete today\'s exercise',icon:'🏃‍♀️'},
+{id:'sodium',label:'Stay under 1,500mg sodium',icon:'⚠️'},
+{id:'sleep',label:'Get 7-8 hours of sleep',icon:'😴'}
+];
+
+const typeEmoji={cardio:'🚶‍♀️',strength:'💪',flex:'🧘‍♀️',rest:'😌'};
+const typeLabel={cardio:'Cardio',strength:'Strength',flex:'Flexibility',rest:'Rest'};
+const typeBadge={cardio:'badge-sky',strength:'badge-rose',flex:'badge-amber',rest:'badge-gray'};
+
+// === STATE ===
+let state = {
+  tab: 'dashboard',
+  mealDay: new Date().getDay() === 0 ? 6 : new Date().getDay() - 1,
+  mealView: 'plan',
+  fitWeek: 0,
+  startDate: null,
+  checkedGrocery: {}
+};
+
+function todayKey(){ return new Date().toISOString().split('T')[0]; }
+
+function loadState(){
+  try {
+    state.startDate = localStorage.getItem('encore_start') || null;
+    let t = localStorage.getItem('encore_track_'+todayKey());
+    state.todayTracker = t ? JSON.parse(t) : {tasks:{},water:0};
+    let g = localStorage.getItem('encore_grocery_checked');
+    state.checkedGrocery = g ? JSON.parse(g) : {};
+  } catch(e){
+    state.todayTracker = {tasks:{},water:0};
+    state.checkedGrocery = {};
+  }
+}
+
+function saveTracker(){
+  try{ localStorage.setItem('encore_track_'+todayKey(), JSON.stringify(state.todayTracker)); }catch(e){}
+}
+
+function saveStart(){
+  try{ localStorage.setItem('encore_start', state.startDate); }catch(e){}
+}
+
+function saveGrocery(){
+  try{ localStorage.setItem('encore_grocery_checked', JSON.stringify(state.checkedGrocery)); }catch(e){}
+}
+
+function getProgramWeek(){
+  if(!state.startDate) return null;
+  const s = new Date(state.startDate+'T00:00:00');
+  const n = new Date(); n.setHours(0,0,0,0);
+  const diff = Math.floor((n - s)/(1000*60*60*24));
+  return Math.min(Math.max(Math.floor(diff/7)+1, 1), 12);
+}
+
+function getMealWeek(){
+  const pw = getProgramWeek();
+  if(!pw) return 0;
+  return ((pw-1)%4);
+}
+
+function getProgramDay(){
+  if(!state.startDate) return 0;
+  const s = new Date(state.startDate+'T00:00:00');
+  const n = new Date(); n.setHours(0,0,0,0);
+  return Math.max(0, Math.floor((n - s)/(1000*60*60*24)));
+}
+
+function render(){
+  const app = document.getElementById('app');
+  let html = '';
+  if(!state.startDate){
+    html = renderSetup();
+  } else {
+    html = '<div class="page-content" style="padding-top:16px">';
+    if(state.tab==='dashboard') html += renderDashboard();
+    else if(state.tab==='meals') html += renderMeals();
+    else if(state.tab==='fitness') html += renderFitness();
+    else if(state.tab==='tracker') html += renderTracker();
+    else if(state.tab==='guide') html += renderGuide();
+    html += '</div>';
+    html += renderTabBar();
+  }
+  app.innerHTML = html;
+  bindEvents();
+}
+
+function renderSetup(){
+  return `
+  <div style="min-height:100vh;min-height:100dvh;display:flex;align-items:center;justify-content:center;padding:20px">
+    <div style="max-width:360px;width:100%;text-align:center">
+      <div style="font-size:48px;margin-bottom:16px">💚</div>
+      <h1 style="margin-bottom:8px">ENCORE Wellness Plan</h1>
+      <p class="text-sm text-gray" style="margin-bottom:24px">DASH Diet + Exercise + Weight Loss<br>Your personalized 12-week program</p>
+      <div class="alert alert-amber" style="text-align:left;margin-bottom:20px">
+        <span style="font-size:18px">⚕️</span>
+        <div>
+          <div class="text-sm fw-700" style="color:#92400e">Medical Notice</div>
+          <div class="text-xs" style="color:#a16207;margin-top:4px">Please consult your healthcare provider before starting this program. Your doctor should review and approve this plan based on your individual health needs.</div>
+        </div>
+      </div>
+      <button class="btn btn-emerald w-full" onclick="startProgram()" style="padding:16px;font-size:16px">Start My 12-Week Journey</button>
+      <p class="text-xs text-gray" style="margin-top:12px">This sets today as Day 1 of your program</p>
+    </div>
+  </div>`;
+}
+
+function renderDashboard(){
+  const pw = getProgramWeek();
+  const mw = getMealWeek()+1;
+  const pd = getProgramDay();
+  const pct = Math.min(Math.round((pw/12)*100),100);
+  const dayName = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'][new Date().getDay()];
+  const projWeight = Math.max(200, 222 - (pw * 1.8));
+  return `
+    <div class="hero hero-emerald" style="margin-bottom:16px">
+      <div style="font-size:28px;margin-bottom:4px">💚</div>
+      <h1 style="color:#fff">ENCORE Wellness</h1>
+      <p class="text-sm" style="color:#a7f3d0;margin-top:4px">DASH Diet + Exercise + Weight Loss</p>
+      <div style="margin-top:16px;display:flex;gap:8px;flex-wrap:wrap">
+        <span class="badge" style="background:rgba(255,255,255,.2);color:#fff">📅 Week ${pw} of 12</span>
+        <span class="badge" style="background:rgba(255,255,255,.2);color:#fff">Day ${pd+1}</span>
+        <span class="badge" style="background:rgba(255,255,255,.2);color:#fff">🍽️ Meal Plan ${mw}</span>
+      </div>
+    </div>
+
+    <div class="card" style="margin-bottom:12px">
+      <div class="flex items-center justify-between mb-2">
+        <h3>12-Week Progress</h3>
+        <span class="text-sm fw-700" style="color:var(--emerald)">${pct}%</span>
+      </div>
+      <div class="progress-track"><div class="progress-fill progress-emerald" style="width:${pct}%"></div></div>
+      <p class="text-xs text-gray mt-2">${dayName} · Week ${pw} · ${12-pw} weeks remaining</p>
+    </div>
+
+    <div class="grid-2" style="margin-bottom:12px">
+      <div class="stat-card">
+        <div class="stat-label">👤 Profile</div>
+        <div class="stat-value" style="font-size:18px">65 yrs, 5'3"</div>
+        <div class="stat-sub">Current: 222 lbs</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">📊 BMI</div>
+        <div class="stat-value" style="color:#dc2626">39.3</div>
+        <div class="stat-sub">Goal: under 30</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">🔥 Daily Calories</div>
+        <div class="stat-value" style="color:var(--orange)">1,400</div>
+        <div class="stat-sub">TDEE: ~1,825</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">🎯 Goal Weight</div>
+        <div class="stat-value" style="color:var(--emerald)">200 lbs</div>
+        <div class="stat-sub">-22 lbs (10%)</div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-bottom:12px">
+      <h3 style="margin-bottom:12px">📉 Projected Progress</h3>
+      <div style="display:flex;align-items:flex-end;gap:6px;height:120px;padding:0 4px">
+        ${[{w:'Start',v:222},{w:'Wk 4',v:215},{w:'Wk 8',v:208},{w:'Wk 12',v:200}].map(p=>{
+          const h = ((p.v - 195) / 30) * 100;
+          const isProj = p.w === 'Wk '+pw || (pw <= 4 && p.w === 'Wk 4');
+          return `<div style="flex:1;text-align:center">
+            <div class="text-xs fw-700" style="color:var(--gray-700);margin-bottom:4px">${p.v}</div>
+            <div style="background:linear-gradient(180deg,#059669,#0d9488);height:${h}%;border-radius:6px 6px 0 0;min-height:20px;transition:.3s"></div>
+            <div class="text-xs text-gray" style="margin-top:4px">${p.w}</div>
+          </div>`;
+        }).join('')}
+      </div>
+      <p class="text-xs text-gray mt-3" style="text-align:center">Projected at 1-2 lbs/week healthy loss</p>
+    </div>
+
+    <div class="alert alert-amber" style="margin-bottom:12px">
+      <span style="font-size:18px">💡</span>
+      <div>
+        <div class="text-sm fw-700" style="color:#92400e">Key Reminders</div>
+        <div class="text-xs" style="color:#a16207;margin-top:4px">No alcohol · No pork products · Sodium under 1,500mg · 8+ glasses of water · Consult your doctor</div>
+      </div>
+    </div>
+
+    <button class="btn btn-outline w-full text-sm" onclick="resetProgram()" style="color:var(--gray-400);border-color:var(--gray-200)">🔄 Reset Program Start Date</button>
+  `;
+}
+
+function renderMeals(){
+  const mw = getMealWeek();
+  const pw = getProgramWeek();
+  const days = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+  const weekData = MEALS[mw];
+  const dayData = weekData[state.mealDay];
+
+  let html = `
+    <div class="hero hero-orange" style="margin-bottom:16px">
+      <div style="font-size:24px">🍽️</div>
+      <h2 style="color:#fff;margin-top:4px">DASH Meal Plan</h2>
+      <p class="text-xs" style="color:#fed7aa;margin-top:4px">Week ${pw} · Meal Plan ${mw+1} of 4 · ~1,400 cal/day · No alcohol · No pork</p>
+    </div>
+
+    <div class="toggle" style="margin-bottom:12px">
+      <button class="toggle-btn ${state.mealView==='plan'?'active':''}" onclick="setMealView('plan')">📋 Meal Plan</button>
+      <button class="toggle-btn ${state.mealView==='grocery'?'active':''}" onclick="setMealView('grocery')">🛒 Grocery List</button>
+    </div>`;
+
+  if(state.mealView==='plan'){
+    html += `
+    <div class="day-pills" style="margin-bottom:12px">
+      ${days.map((d,i)=>`<button class="pill ${state.mealDay===i?'active active-orange':''}" onclick="setMealDay(${i})">${d}</button>`).join('')}
+    </div>
+
+    <div class="card flex items-center justify-between" style="margin-bottom:12px">
+      <div>
+        <h3>${dayData.day}</h3>
+        <p class="text-xs text-gray">5 meals planned</p>
+      </div>
+      <div style="text-align:right">
+        <span class="text-2xl fw-800" style="color:var(--orange)">${dayData.cal}</span>
+        <span class="text-xs text-gray" style="display:block">calories</span>
+      </div>
+    </div>
+
+    <div class="space-y">
+      ${dayData.meals.map(m=>`
+        <div class="meal-card">
+          <div class="flex items-start justify-between mb-1">
+            <div>
+              <div class="meal-type">${m.t}</div>
+              <h4 style="margin-top:2px">${m.n}</h4>
+            </div>
+            <div style="text-align:right;flex-shrink:0;margin-left:12px">
+              <span class="meal-cal">${m.c}</span>
+              <span class="text-xs text-gray" style="display:block">cal</span>
+            </div>
+          </div>
+          <p class="text-sm text-gray-dark" style="margin-top:6px;line-height:1.6">${m.d}</p>
+        </div>
+      `).join('')}
+    </div>
+
+    <div style="margin-top:16px;display:flex;gap:4px;justify-content:center">
+      ${[0,1,2,3].map(i=>`<button class="pill ${mw===i?'active active-orange':''}" onclick="jumpMealWeek(${i})" style="font-size:11px">Plan ${i+1}</button>`).join('')}
+    </div>
+    <p class="text-xs text-gray" style="text-align:center;margin-top:6px">Currently on Meal Plan ${mw+1} (auto-rotates every week)</p>`;
+  } else {
+    const grocery = GROCERIES[mw];
+    html += `
+    <div class="card" style="margin-bottom:12px">
+      <h3>🛒 Grocery List — Meal Plan ${mw+1}</h3>
+      <p class="text-xs text-gray mt-1">Tap items to check them off as you shop</p>
+    </div>
+    ${grocery.map(cat=>`
+      <div class="grocery-cat">${cat.cat}</div>
+      ${cat.items.map((item,i)=>{
+        const key = mw+'_'+cat.cat+'_'+i;
+        const checked = state.checkedGrocery[key];
+        return `<div class="grocery-item" onclick="toggleGrocery('${key}')">
+          <div class="grocery-check ${checked?'checked':''}">${checked?'✓':''}</div>
+          <span style="${checked?'text-decoration:line-through;color:var(--gray-400)':''}">${item}</span>
+        </div>`;
+      }).join('')}
+    `).join('')}
+
+    <div style="margin-top:16px;display:flex;gap:4px;justify-content:center">
+      ${[0,1,2,3].map(i=>`<button class="pill ${mw===i?'active active-orange':''}" onclick="jumpMealWeek(${i})" style="font-size:11px">Plan ${i+1}</button>`).join('')}
+    </div>`;
+  }
+  return html;
+}
+
+function renderFitness(){
+  const pw = getProgramWeek();
+  const fw = state.fitWeek;
+  const week = FITNESS[fw];
+  const days = week.days;
+  const isCurrent = (fw+1) === pw;
+
+  return `
+    <div class="hero hero-indigo" style="margin-bottom:16px">
+      <div style="font-size:24px">🏋️‍♀️</div>
+      <h2 style="color:#fff;margin-top:4px">12-Week Fitness Plan</h2>
+      <p class="text-xs" style="color:#c7d2fe;margin-top:4px">Progressive program · Sedentary to active · Currently Week ${pw}</p>
+    </div>
+
+    <div class="week-nav" style="margin-bottom:12px">
+      <button class="week-btn" onclick="setFitWeek(${Math.max(0,fw-1)})" ${fw===0?'disabled':''}>◀</button>
+      <div style="text-align:center">
+        <div class="fw-700">Week ${week.wk} of 12 ${isCurrent?'<span class="badge badge-emerald" style="margin-left:6px;font-size:10px">CURRENT</span>':''}</div>
+        <span class="badge ${week.color}" style="margin-top:4px">${week.phase} Phase</span>
+      </div>
+      <button class="week-btn" onclick="setFitWeek(${Math.min(11,fw+1)})" ${fw===11?'disabled':''}>▶</button>
+    </div>
+
+    <div class="alert alert-indigo" style="margin-bottom:12px">
+      <span style="font-size:18px">🎯</span>
+      <div>
+        <div class="text-sm fw-600" style="color:#3730a3">Weekly Goal</div>
+        <div class="text-sm" style="color:#4338ca;margin-top:2px">${week.goal}</div>
+      </div>
+    </div>
+
+    <div class="space-y">
+      ${days.map(d=>`
+        <div class="fit-card ${d.tp==='rest'?'rest':''}">
+          <div class="flex items-center justify-between mb-2">
+            <div class="flex items-center gap-3">
+              <span class="fit-emoji">${typeEmoji[d.tp]}</span>
+              <div>
+                <div class="text-xs fw-500 text-gray">${d.d}</div>
+                <h4>${d.nm}</h4>
+              </div>
+            </div>
+            <div style="text-align:right">
+              <span class="badge ${typeBadge[d.tp]}">${typeLabel[d.tp]}</span>
+              ${d.dur!=='—'?`<div class="text-xs text-gray" style="margin-top:4px">⏱️ ${d.dur}</div>`:''}
+            </div>
+          </div>
+          <p class="text-sm text-gray-dark">${d.desc}</p>
+        </div>
+      `).join('')}
+    </div>
+
+    <div class="week-grid" style="margin-top:16px">
+      ${FITNESS.map((w,i)=>`<button class="week-dot ${fw===i?'active':''} ${(i+1)===pw?'current':''}" onclick="setFitWeek(${i})">${w.wk}</button>`).join('')}
+    </div>
+    <p class="text-xs text-gray" style="text-align:center;margin-top:8px">Green outline = your current program week</p>
+  `;
+}
+
+function renderTracker(){
+  const tr = state.todayTracker;
+  const doneCount = Object.keys(tr.tasks).length;
+  const pct = Math.round((doneCount/TASKS.length)*100);
+
+  return `
+    <div class="hero hero-cyan" style="margin-bottom:16px">
+      <div style="font-size:24px">✅</div>
+      <h2 style="color:#fff;margin-top:4px">Daily Tracker</h2>
+      <p class="text-xs" style="color:#a5f3fc;margin-top:4px">Check off your daily goals to stay on track</p>
+    </div>
+
+    <div class="card" style="margin-bottom:12px">
+      <div class="flex items-center justify-between mb-2">
+        <h3>Today's Progress</h3>
+        <span class="text-sm fw-700" style="color:var(--emerald)">${doneCount}/${TASKS.length}</span>
+      </div>
+      <div class="progress-track"><div class="progress-fill progress-emerald" style="width:${pct}%"></div></div>
+      <p class="text-xs text-gray mt-1" style="text-align:right">${pct}% complete</p>
+    </div>
+
+    <div class="space-y-sm">
+      ${TASKS.map(t=>{
+        const done = tr.tasks[t.id];
+        return `<div class="check-item ${done?'done':''}" onclick="toggleTask('${t.id}')">
+          <div class="check-circle">${done?'✓':''}</div>
+          <span class="check-label">${t.label}</span>
+          <span style="font-size:16px">${t.icon}</span>
+        </div>`;
+      }).join('')}
+    </div>
+
+    <div class="card" style="margin-top:16px">
+      <h3 class="flex items-center gap-2" style="margin-bottom:12px">💧 Water Tracker</h3>
+      <div class="flex items-center justify-center gap-4">
+        <button class="btn-icon" onclick="changeWater(-1)">−</button>
+        <div style="text-align:center">
+          <div class="text-3xl fw-800" style="color:#2563eb">${tr.water}</div>
+          <div class="text-xs text-gray">of 8 glasses</div>
+        </div>
+        <button class="btn-icon" onclick="changeWater(1)" style="background:#dbeafe;color:#2563eb">+</button>
+      </div>
+      <div class="water-bar" style="margin-top:12px">
+        ${[...Array(8)].map((_,i)=>`<div class="water-glass ${i<tr.water?'filled':'empty'}"></div>`).join('')}
+      </div>
+    </div>
+  `;
+}
+
+function renderGuide(){
+  return `
+    <div class="hero hero-rose" style="margin-bottom:16px">
+      <div style="font-size:24px">📖</div>
+      <h2 style="color:#fff;margin-top:4px">ENCORE Program Guide</h2>
+      <p class="text-xs" style="color:#fecdd3;margin-top:4px">Understanding your DASH + Exercise + Weight Loss plan</p>
+    </div>
+
+    <div class="card" style="margin-bottom:12px">
+      <h3 style="margin-bottom:8px">What is the ENCORE Trial?</h3>
+      <p class="text-sm text-gray-dark" style="line-height:1.7">The ENCORE (Exercise and Nutrition Interventions for Cardiovascular Health) trial demonstrated that combining the DASH diet with aerobic exercise and caloric restriction for weight management produces significant improvements in blood pressure, cardiovascular fitness, and overall health — greater than diet alone.</p>
+    </div>
+
+    <div class="card" style="margin-bottom:12px">
+      <h3 style="margin-bottom:12px">The Three Pillars</h3>
+      ${[
+        ['🍽️','bg-orange','DASH Diet','Rich in fruits, vegetables, whole grains, lean proteins, and low-fat dairy. Low in sodium (<1,500mg), saturated fats, and added sugars. No alcohol. No pork products.'],
+        ['🏋️‍♀️','bg-indigo','Progressive Exercise','Starting with 10-minute walks and building to 35-40 minutes of brisk walking plus strength training over 12 weeks. Designed for a sedentary starting point.'],
+        ['📉','bg-emerald','Weight Management','~1,400 calories/day creates a safe 400-500 calorie deficit for 1-2 lbs/week loss. Initial goal: lose 10% body weight (22 lbs).']
+      ].map(([emoji,bg,title,desc])=>`
+        <div class="flex gap-3" style="margin-bottom:14px">
+          <div class="emoji-icon" style="font-size:24px">${emoji}</div>
+          <div>
+            <h4>${title}</h4>
+            <p class="text-xs text-gray-dark mt-1" style="line-height:1.6">${desc}</p>
+          </div>
+        </div>
+      `).join('')}
+    </div>
+
+    <div class="card" style="margin-bottom:12px">
+      <h3 style="margin-bottom:12px">DASH Daily Servings Guide</h3>
+      ${[
+        ['🌾','Whole Grains','6-8 servings/day','1 slice bread, ½ cup rice/pasta'],
+        ['🥦','Vegetables','4-5 servings/day','1 cup raw or ½ cup cooked'],
+        ['🍎','Fruits','4-5 servings/day','1 medium fruit, ½ cup fresh/frozen'],
+        ['🥛','Low-Fat Dairy','2-3 servings/day','1 cup milk/yogurt, 1.5 oz cheese'],
+        ['🍗','Lean Protein','≤6 oz/day','Chicken, turkey, fish, eggs (NO pork)'],
+        ['🥜','Nuts/Seeds/Legumes','4-5 servings/week','⅓ cup nuts, 2 tbsp seeds, ½ cup beans'],
+        ['🫒','Healthy Fats','2-3 servings/day','1 tsp olive oil, 1 tbsp dressing']
+      ].map(([emoji,name,amount,example])=>`
+        <div class="info-row">
+          <span style="font-size:20px">${emoji}</span>
+          <div style="flex:1">
+            <div class="text-sm fw-600">${name}</div>
+            <div class="text-xs text-gray">${amount} — ${example}</div>
+          </div>
+        </div>
+      `).join('')}
+    </div>
+
+    <div class="card" style="margin-bottom:12px">
+      <h3 style="margin-bottom:10px">Your Dietary Rules</h3>
+      ${[
+        '🚫 No alcohol of any kind',
+        '🚫 No pork or pork products (bacon, ham, sausage, lard, etc.)',
+        '⬇️ Sodium under 1,500mg per day',
+        '⬇️ Minimize added sugars (≤5 servings/week)',
+        '⬇️ Limit saturated fat to <6% of calories',
+        '💧 Drink at least 8 glasses of water daily',
+        '✅ Read all food labels for hidden sodium & pork ingredients'
+      ].map(r=>`<div class="text-sm" style="padding:5px 0;color:var(--gray-600)">${r}</div>`).join('')}
+    </div>
+
+    <div class="card" style="margin-bottom:12px">
+      <h3 style="margin-bottom:10px">Exercise Safety Tips</h3>
+      ${[
+        'Always warm up for 2-3 minutes before exercise',
+        'Stop immediately if you feel chest pain, dizziness, or shortness of breath',
+        'Use a chair or wall for balance support during exercises',
+        'Wear supportive, comfortable shoes for walking',
+        'Walk on flat, even surfaces to start',
+        'Exercise during cooler parts of the day in warm weather',
+        'Cool down with 2-3 minutes of slow walking after exercise',
+        'Listen to your body — rest if something hurts'
+      ].map(t=>`<div class="text-sm" style="padding:5px 0;color:var(--gray-600)">• ${t}</div>`).join('')}
+    </div>
+
+    <div class="alert alert-red" style="margin-bottom:12px">
+      <span style="font-size:18px">⚠️</span>
+      <div>
+        <div class="text-sm fw-700" style="color:#991b1b">Medical Disclaimer</div>
+        <div class="text-xs" style="color:#b91c1c;margin-top:4px;line-height:1.6">This plan is for informational purposes only. Please consult your healthcare provider before starting any new diet or exercise program, especially given your age and current health status. Your doctor should approve your calorie targets and exercise progression.</div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-bottom:12px">
+      <h3 style="margin-bottom:8px">Your 4-Week Meal Rotation</h3>
+      <p class="text-sm text-gray-dark" style="line-height:1.7">Your meal plans rotate through 4 unique weeks of recipes to keep variety high. Week 1: Classic DASH · Week 2: Mediterranean-Inspired · Week 3: Global Flavors · Week 4: Comfort Foods Made Healthy. This 4-week cycle repeats through your 12-week program.</p>
+    </div>
+  `;
+}
+
+function renderTabBar(){
+  const tabs = [
+    {id:'dashboard',icon:'🏠',label:'Home'},
+    {id:'meals',icon:'🍽️',label:'Meals'},
+    {id:'fitness',icon:'💪',label:'Fitness'},
+    {id:'tracker',icon:'✅',label:'Tracker'},
+    {id:'guide',icon:'📖',label:'Guide'}
+  ];
+  return `<div class="tab-bar">${tabs.map(t=>`
+    <button class="tab ${state.tab===t.id?'active':''}" onclick="switchTab('${t.id}')">
+      <span class="tab-icon">${t.icon}</span>
+      <span>${t.label}</span>
+      <div class="tab-dot"></div>
+    </button>
+  `).join('')}</div>`;
+}
+
+// === EVENT HANDLERS ===
+function switchTab(t){
+  state.tab = t;
+  if(t==='fitness'){
+    const pw = getProgramWeek();
+    if(pw) state.fitWeek = pw - 1;
+  }
+  render();
+  window.scrollTo(0,0);
+}
+
+function startProgram(){
+  state.startDate = todayKey();
+  state.todayTracker = {tasks:{},water:0};
+  saveStart();
+  state.fitWeek = 0;
+  render();
+}
+
+function resetProgram(){
+  if(confirm('Reset your program start date to today? Your tracking history will be kept.')){
+    state.startDate = todayKey();
+    saveStart();
+    render();
+  }
+}
+
+function setMealDay(d){ state.mealDay = d; render(); }
+function setMealView(v){ state.mealView = v; render(); }
+
+function jumpMealWeek(w){
+  // Temporarily override meal week view - we store the original getMealWeek and let user browse
+  // For simplicity, we just update selected day to 0 and render the requested week
+  state._overrideMealWeek = w;
+  render();
+}
+
+// Override getMealWeek to support browsing
+const _origGetMealWeek = getMealWeek;
+getMealWeek = function(){
+  if(state._overrideMealWeek !== undefined) return state._overrideMealWeek;
+  return _origGetMealWeek();
+};
+
+function setFitWeek(w){ state.fitWeek = w; render(); }
+
+function toggleTask(id){
+  if(state.todayTracker.tasks[id]) delete state.todayTracker.tasks[id];
+  else state.todayTracker.tasks[id] = true;
+  saveTracker();
+  render();
+}
+
+function changeWater(delta){
+  state.todayTracker.water = Math.min(12, Math.max(0, state.todayTracker.water + delta));
+  saveTracker();
+  render();
+}
+
+function toggleGrocery(key){
+  if(state.checkedGrocery[key]) delete state.checkedGrocery[key];
+  else state.checkedGrocery[key] = true;
+  saveGrocery();
+  render();
+}
+
+function bindEvents(){}
+
+// === INIT ===
+loadState();
+render();
+</script>
+</body>
+</html>
